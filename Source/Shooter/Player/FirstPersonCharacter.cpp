@@ -58,6 +58,7 @@ void AFirstPersonCharacter::BeginPlay()
 	}
 	Gun->RelativeLocation = FVector(0.0);
 	Gun->RelativeRotation = FRotator(0.0);
+	Gun->AnimInstance = Mesh1P->GetAnimInstance();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -70,6 +71,7 @@ void AFirstPersonCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, Gun, &UGun::OnFire);
 	PlayerInputComponent->BindAxis("MoveForward", this, &AFirstPersonCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AFirstPersonCharacter::MoveRight);
 

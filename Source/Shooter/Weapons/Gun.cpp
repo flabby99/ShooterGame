@@ -19,7 +19,6 @@ UGun::UGun()
 	FP_Gun->SetOnlyOwnerSee(true);			// only the owning player will see this mesh
 	FP_Gun->bCastDynamicShadow = false;
 	FP_Gun->CastShadow = false;
-	if (MeshAsset) FP_Gun->SetSkeletalMesh(MeshAsset);
 	// FP_Gun->SetupAttachment(Mesh1P, TEXT("GripPoint"));
 	FP_Gun->SetupAttachment(this);
 
@@ -36,7 +35,7 @@ void UGun::BeginPlay()
 
 	// ...
 	if (MeshAsset) FP_Gun->SetSkeletalMesh(MeshAsset);
-	
+	FP_MuzzleLocation->SetRelativeRotation(ProjectileRotation);
 }
 
 

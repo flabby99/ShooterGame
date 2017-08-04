@@ -7,7 +7,7 @@
 #include "Gun.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS( ClassGroup=(Custom), Blueprintable, meta=(BlueprintSpawnableComponent) )
 class SHOOTER_API UGun : public USceneComponent
 {
 	GENERATED_BODY()
@@ -40,12 +40,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Animation)
 	class UAnimInstance* AnimInstance;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	struct FRotator ProjectileRotation = FRotator(0.0f);
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
-	//Fires a projectile
-	void OnFire();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Assets")
 	class USkeletalMesh* MeshAsset;
@@ -54,6 +54,7 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+	//Fires a projectile
+	void OnFire();
 	
 };
