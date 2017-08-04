@@ -21,6 +21,10 @@ class AFirstPersonCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FirstPersonCameraComponent;
 
+	/** The FPS character's gun */
+	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+	class UGun* Gun;
+
 public:
 	AFirstPersonCharacter();
 

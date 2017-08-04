@@ -5,9 +5,8 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/InputSettings.h"
-#include "Kismet/HeadMountedDisplayFunctionLibrary.h"
 #include "Kismet/GameplayStatics.h"
-#include "MotionControllerComponent.h"
+#include "../Weapons/Gun.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 
@@ -37,6 +36,9 @@ AFirstPersonCharacter::AFirstPersonCharacter()
 	Mesh1P->CastShadow = false;
 	Mesh1P->RelativeRotation = FRotator(1.9f, -19.19f, 5.2f);
 	Mesh1P->RelativeLocation = FVector(-0.5f, -4.4f, -155.7f);
+
+	Gun = CreateDefaultSubobject<UGun>(TEXT("Gun"));
+	Gun->SetupAttachment(Mesh1P);
 }
 
 void AFirstPersonCharacter::BeginPlay()
@@ -45,7 +47,17 @@ void AFirstPersonCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	//Attach gun mesh component to Skeleton, doing it here because the skeleton is not yet created in the constructor
-	//FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
+	if (!ensure(Gun)) return;
+	if (Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint")))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Successfully attached to socket"));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Successfully Not attached to socket"));
+	}
+	Gun->RelativeLocation = FVector(0.0);
+	Gun->RelativeRotation = FRotator(0.0);
 }
 
 //////////////////////////////////////////////////////////////////////////

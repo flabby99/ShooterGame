@@ -47,6 +47,9 @@ protected:
 	//Fires a projectile
 	void OnFire();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Assets")
+	class USkeletalMesh* MeshAsset;
+
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
