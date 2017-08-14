@@ -55,6 +55,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	//Fires a projectile
+	UFUNCTION(BlueprintCallable, Category = Firing)
 	void OnFire();
 	
 };
