@@ -36,18 +36,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	class UAnimMontage* FireAnimation;
 
-	//**Anim instance to play when firing*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Animation)
-	class UAnimInstance* AnimInstance;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	struct FRotator ProjectileRotation = FRotator(0.0f);
+	struct FRotator ProjectileRotation = FRotator(-1.3f, 94.0f, 0.0f);
+
+	class UAnimInstance* AnimInstance;
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Assets")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Assets")
 	class USkeletalMesh* MeshAsset;
 
 public:	
