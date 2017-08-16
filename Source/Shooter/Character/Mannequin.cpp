@@ -37,20 +37,19 @@ AMannequin::AMannequin()
 void AMannequin::BeginPlay()
 {
 	Super::BeginPlay();
-	//
-	////Attach gun mesh component to Skeleton, doing it here because the skeleton is not yet created in the constructor
-	//if (!ensure(Gun)) return;
-	//if (Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint")))
-	//{
-	//	UE_LOG(LogTemp, Warning, TEXT("Successfully attached to socket"));
-	//}
-	//else
-	//{
-	//	UE_LOG(LogTemp, Warning, TEXT("Successfully Not attached to socket"));
-	//}
-	//Gun->RelativeLocation = FVector(0.0);
-	//Gun->RelativeRotation = FRotator(0.0);
-	Gun->AnimInstance = Mesh1P->GetAnimInstance();
+	
+	//Attach gun mesh component to Skeleton, doing it here because the skeleton is not yet created in the constructor
+	if (!ensure(Gun)) return;
+	if (IsPlayerControlled())
+	{
+		Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
+	}
+	else
+	{
+		Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));	
+	}
+	Gun->FPAnimInstance = Mesh1P->GetAnimInstance();
+	Gun->TPAnimInstance = GetMesh()->GetAnimInstance();
 }
 
 // Called every frame
@@ -66,6 +65,12 @@ void AMannequin::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AMannequin::PullTrigger);
 
+}
+
+void AMannequin::UnPossessed()
+{
+	Super::UnPossessed();
+	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
 }
 
 void AMannequin::PullTrigger()

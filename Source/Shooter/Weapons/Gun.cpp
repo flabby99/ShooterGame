@@ -16,7 +16,7 @@ UGun::UGun()
 	// ...
 	// Create a gun mesh component
 	FP_Gun = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("FP_Gun"));
-	FP_Gun->SetOnlyOwnerSee(true);			// only the owning player will see this mesh
+	FP_Gun->SetOnlyOwnerSee(false);			// only the owning player will see this mesh
 	FP_Gun->bCastDynamicShadow = false;
 	FP_Gun->CastShadow = false;
 	// FP_Gun->SetupAttachment(Mesh1P, TEXT("GripPoint"));
@@ -75,12 +75,13 @@ void UGun::OnFire()
 	}
 
 	// try and play a firing animation if specified
-	if (FireAnimation != NULL)
+	if (FPFireAnimation != NULL && TPFireAnimation != NULL)
 	{
 		// Get the animation object for the arms mesh
-		if (AnimInstance != NULL)
+		if (FPAnimInstance != NULL && TPAnimInstance != NULL)
 		{
-			AnimInstance->Montage_Play(FireAnimation, 1.f);
+			FPAnimInstance->Montage_Play(FPFireAnimation, 1.f);
+			TPAnimInstance->Montage_Play(TPFireAnimation, 1.f);
 		}
 	}
 }

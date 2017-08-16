@@ -32,14 +32,21 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	class USoundBase* FireSound;
 
-	/** AnimMontage to play each time we fire */
+	/** AnimMontage to play each time we fire - First Person*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	class UAnimMontage* FireAnimation;
+	class UAnimMontage* FPFireAnimation;
+
+	/** AnimMontage to play each time we fire - Third Person*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	class UAnimMontage* TPFireAnimation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	struct FRotator ProjectileRotation = FRotator(-1.3f, 94.0f, 0.0f);
 
-	class UAnimInstance* AnimInstance;
+	UPROPERTY()
+	class UAnimInstance* FPAnimInstance;
+	UPROPERTY()
+	class UAnimInstance* TPAnimInstance;
 
 protected:
 	// Called when the game starts

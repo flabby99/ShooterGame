@@ -58,7 +58,7 @@ void AFirstPersonCharacter::BeginPlay()
 	}
 	Gun->RelativeLocation = FVector(0.0);
 	Gun->RelativeRotation = FRotator(0.0);
-	Gun->AnimInstance = Mesh1P->GetAnimInstance();
+	Gun->FPAnimInstance = Mesh1P->GetAnimInstance();
 }
 
 //////////////////////////////////////////////////////////////////////////
