@@ -75,6 +75,6 @@ Intermediate/*
 # Cache files for the editor to use
 DerivedDataCache/*
 
-Content/UI/BT17-Firing-M1A1-tank-in-Djibouti.uasset
-Content/UI/boombox2_Font.uasset
-Content/UI/boombox2.uasset
+#Custom
+Content/TestingGroundPack/*
+Content/Geometry/Props/*
