@@ -11,8 +11,16 @@ class AShooterGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pool")
+	class UActorPool* NavMeshPool;
+
 public:
 	AShooterGameMode();
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void PopulateBoundsVolumePool();
+
+	UActorPool* GetPool();
 };
 
 

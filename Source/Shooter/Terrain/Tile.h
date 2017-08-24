@@ -6,6 +6,22 @@
 #include "GameFramework/Actor.h"
 #include "Tile.generated.h"
 
+/**
+ * Struct for a function
+ */
+USTRUCT()
+struct FSpawnPosition
+{
+	GENERATED_USTRUCT_BODY()
+
+	FVector Location;
+	float Rotation;
+	float Scale;
+};
+
+
+class UActorPool;
+
 UCLASS()
 class SHOOTER_API ATile : public AActor
 {
@@ -21,16 +37,48 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+	/**
+	* The amount to offset the navmesh on attach.
+	*/
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spawning")
+	FVector NavMeshOffset;
+
+	/**
+	 * The min extent of bounding box
+	 */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spawning")
+	FVector MinExtent;
+
+	/**
+	* The max extent of bounding box
+	*/
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spawning")
+	FVector MaxExtent;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	/**
+	 * This sets the Nav Mesh Pool reference from the game mode
+	 * @param InPool - The pool reference to set
+	 */
+	UFUNCTION(BlueprintCallable, Category = "Pool")
+	void SetPool(UActorPool* InPool);
 
 private:
 	bool CanSpawnAtLocation(FVector Location, float Radius);
 
 	bool FindEmptyLocation(FVector& OutLocation, float Radius);
 
-	void PlaceActor(TSubclassOf<AActor> ToSpawn, FVector SpawnPoint, float Rotation, float Scale);
+	void PlaceActor(TSubclassOf<AActor> ToSpawn, FSpawnPosition &SpawnPosition);
+
+	void PositionNavMesh();
+
+	AActor* NavMesh;
+
+	UActorPool* NavMeshPool;
 
 };

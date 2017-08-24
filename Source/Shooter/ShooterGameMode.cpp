@@ -4,6 +4,9 @@
 #include "ShooterHUD.h"
 #include "Player/FirstPersonCharacter.h"
 #include "UObject/ConstructorHelpers.h"
+#include "AI/Navigation/NavMeshBoundsVolume.h"
+#include "EngineUtils.h"
+#include "ActorPool.h"
 
 AShooterGameMode::AShooterGameMode()
 	: Super()
@@ -14,4 +17,22 @@ AShooterGameMode::AShooterGameMode()
 
 	// use our custom HUD class
 	HUDClass = AShooterHUD::StaticClass();
+
+	NavMeshPool = CreateDefaultSubobject<UActorPool>(TEXT("Nav Mesh Pool"));
+}
+
+void AShooterGameMode::PopulateBoundsVolumePool()
+{
+	TActorIterator<ANavMeshBoundsVolume> VolumeIterator = TActorIterator<ANavMeshBoundsVolume>(GetWorld());
+	//Could do Template VarName(args)
+	while (VolumeIterator)
+	{
+		NavMeshPool->Add(*VolumeIterator); //Get contents of the iterator.
+		++VolumeIterator;
+	}
+}
+
+UActorPool * AShooterGameMode::GetPool()
+{
+	return NavMeshPool;
 }
