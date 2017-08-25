@@ -35,6 +35,7 @@ void UGun::BeginPlay()
 
 	// ...
 	if (MeshAsset) FP_Gun->SetSkeletalMesh(MeshAsset);
+	FP_MuzzleLocation->AttachToComponent(FP_Gun, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("Muzzle"));
 	FP_MuzzleLocation->SetRelativeRotation(ProjectileRotation);
 }
 
@@ -61,6 +62,7 @@ void UGun::OnFire()
 
 			//Set Spawn Collision Handling Override
 			FActorSpawnParameters ActorSpawnParams;
+			ActorSpawnParams.Instigator = Cast<APawn>(GetOwner());
 			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 
 			// spawn the projectile at the muzzle
